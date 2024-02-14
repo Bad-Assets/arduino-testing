@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Capstone Prototype</title>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js" integrity="sha512-tE1z+95+lMCGwy+9PnKgUSIeHhvioC9lMlI7rLWU0Ps3XTdjRygLcy4mLuL0JAoK4TLdQEyP0yOl/9dMOqpH/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"
+        integrity="sha512-c4FE2uNeKCAtchLEpO9yimL8CuifrlEMnORyTNw0TAkGqYpqADT8qX/DG/ASy+F29KUSgEgrPidbNPENW17QFQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+</head>
+
+<body>
+    <h1>Constellation Test</h1>
+    <div id="test"></div>
+    <script>
+        function setup() {
+            createCanvas(600, 600);
+            background("red");
+        }
+        var socket = io();
+
+        let constellation = [];  
+        let constellationCoord = [];              
+
+        function draw() {
+            for(let i = 0; i < constellationCoord.length; i++){
+                circle(constellationCoord[i][0], constellationCoord[i][1], 30);
+
+                if(i < constellationCoord.length - 1) {
+                    line(constellationCoord[i][0], constellationCoord[i][1], constellationCoord[i +1][0], constellationCoord[i+1][1]);
+                }
+            }
+        }
+
+
+        socket.on('data', function (data) {
+                //console.log(data)
+
+                let stringTest = "" + data;
+
+                // console.log(typeof stringTest);
+                // console.log('data.contains("stringTest")', stringTest.includes("activated"))
+
+                if (stringTest.includes("sensor1") && !constellation.includes(1)) {
+                    console.log("sensor1")
+                    constellation.push(1);
+                    constellationCoord.push([random(50, 200), random(50, 200)]);
+                }
+
+                if (stringTest.includes("sensor2") && !constellation.includes(2)) {
+                    console.log("sensor2");
+                    constellation.push(2);
+                    constellationCoord.push([random(200, 400), random(50, 200)]);
+
+                }
+
+                if (stringTest.includes("sensor3") && !constellation.includes(3)) {
+                    console.log("sensor3");
+                    constellation.push(3);
+                    constellationCoord.push([random(400, 550), random(50, 200)]);
+
+                }
+
+                if (stringTest.includes("sensor4") && !constellation.includes(4)) {
+                    console.log("sensor4");
+                    constellation.push(4);
+                    constellationCoord.push([random(50, 200), random(200, 400)]);
+
+                }
+
+                if (stringTest.includes("sensor5") && !constellation.includes(5)) {
+                    console.log("sensor5");
+                    constellation.push(5);
+                    constellationCoord.push([random(200, 400), random(200, 400)]);
+
+                }
+
+                if (stringTest.includes("sensor6") && !constellation.includes(6)) {
+                    console.log("sensor6");
+                    constellation.push(6);
+                    constellationCoord.push([random(400, 550), random(200, 400)]);
+
+                }
+
+                if (stringTest.includes("sensor7") && !constellation.includes(7)) {
+                    console.log("sensor7");
+                    constellation.push(7);
+                    constellationCoord.push([random(50, 200), random(400, 550)]);
+
+                }
+
+                console.log(constellation);
+                console.log(constellationCoord);
+
+            });
+    </script>
+
+</body>
+
+</html>
